@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DAEE18BE-D1D2-459D-8749-C27911E22D51</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Breaking Box</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>13E9DD82-C5C6-44BE-B29F-D606616EA066</key>
+		<string>ssh://github.com/jnatalzia/BreakingBox.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Breaking Box/Breaking Box/Breaking Box.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>13E9DD82-C5C6-44BE-B29F-D606616EA066</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/jnatalzia/BreakingBox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>13E9DD82-C5C6-44BE-B29F-D606616EA066</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>13E9DD82-C5C6-44BE-B29F-D606616EA066</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BreakingBox</string>
+		</dict>
+	</array>
+</dict>
+</plist>
