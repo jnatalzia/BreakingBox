@@ -11,6 +11,7 @@
 		3FE9EA7F1833DB3700CC5854 /* Platform.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA7E1833DB3700CC5854 /* Platform.m */; };
 		3FE9EA821833DC4600CC5854 /* ColorBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA811833DC4600CC5854 /* ColorBox.m */; };
 		4AE1859718318BDF00E643CD /* sky-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AE1859618318BDF00E643CD /* sky-background.png */; };
+		4AEB1116183508C3005D40D2 /* StartScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB1115183508C3005D40D2 /* StartScene.m */; };
 		4AF47EA718301F23009CD43F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF47EA618301F23009CD43F /* Foundation.framework */; };
 		4AF47EA918301F23009CD43F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF47EA818301F23009CD43F /* CoreGraphics.framework */; };
 		4AF47EAB18301F23009CD43F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF47EAA18301F23009CD43F /* UIKit.framework */; };
@@ -54,6 +55,8 @@
 		3FE9EA801833DC4600CC5854 /* ColorBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorBox.h; path = "Breaking Box/ColorBox.h"; sourceTree = "<group>"; };
 		3FE9EA811833DC4600CC5854 /* ColorBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorBox.m; path = "Breaking Box/ColorBox.m"; sourceTree = "<group>"; };
 		4AE1859618318BDF00E643CD /* sky-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sky-background.png"; sourceTree = "<group>"; };
+		4AEB1114183508C3005D40D2 /* StartScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartScene.h; path = ../StartScene.h; sourceTree = "<group>"; };
+		4AEB1115183508C3005D40D2 /* StartScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StartScene.m; path = ../StartScene.m; sourceTree = "<group>"; };
 		4AF47EA318301F23009CD43F /* Breaking Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breaking Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF47EA618301F23009CD43F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4AF47EA818301F23009CD43F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,9 +127,9 @@
 		4AF47E9A18301F23009CD43F = {
 			isa = PBXGroup;
 			children = (
+				4AF47EAE18301F23009CD43F /* Breaking Box */,
 				3FE9EA831833E8CB00CC5854 /* PhysicsObjects */,
 				4AF47EE5183021DE009CD43F /* Assets */,
-				4AF47EAE18301F23009CD43F /* Breaking Box */,
 				4AF47ED518301F23009CD43F /* Breaking BoxTests */,
 				4AF47EA518301F23009CD43F /* Frameworks */,
 				4AF47EA418301F23009CD43F /* Products */,
@@ -163,6 +166,8 @@
 				4AF47EBD18301F23009CD43F /* Main_iPad.storyboard */,
 				4AF47EC018301F23009CD43F /* ViewController.h */,
 				4AF47EC118301F23009CD43F /* ViewController.m */,
+				4AEB1114183508C3005D40D2 /* StartScene.h */,
+				4AEB1115183508C3005D40D2 /* StartScene.m */,
 				3F39FEB21831357700BD4BAB /* RopeScene.h */,
 				3F39FEB31831357700BD4BAB /* RopeScene.m */,
 				4AF47EC318301F23009CD43F /* MyScene.h */,
@@ -324,6 +329,7 @@
 				4AF47EC518301F23009CD43F /* MyScene.m in Sources */,
 				3F39FEB41831357700BD4BAB /* RopeScene.m in Sources */,
 				4AF47EC218301F23009CD43F /* ViewController.m in Sources */,
+				4AEB1116183508C3005D40D2 /* StartScene.m in Sources */,
 				4AF47EB918301F23009CD43F /* AppDelegate.m in Sources */,
 				3FE9EA821833DC4600CC5854 /* ColorBox.m in Sources */,
 				3FE9EA7F1833DB3700CC5854 /* Platform.m in Sources */,

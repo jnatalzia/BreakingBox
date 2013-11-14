@@ -1,14 +1,14 @@
 //
-//  ViewController.h
+//  StartScene.h
 //  Breaking Box
 //
-
+//  Created by Ryan  Stush on 11/14/13.
 //  Copyright (c) 2013 RyanStush, JoeNatalzia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
+#import "ViewController.h"
 
-//@interface ViewController : UIViewController
+@interface StartScene : SKScene
 
-//@end
+@end

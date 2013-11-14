@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "MyScene.h"
+#import "StartScene.h"
 #import "RopeScene.h"
 
 @implementation ViewController
@@ -27,8 +28,24 @@
     ropescene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
-    [skView presentScene:ropescene];
+    //[skView presentScene:ropescene];
 }
+
+//Screen inits -----------------------------------------------------------------
+- (void)viewWillAppear:(BOOL)animated
+{
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenBound.size;
+    CGFloat screenWidth = screenSize.width;
+    CGFloat screenHeight = screenSize.height;
+    StartScene *startScene = [[StartScene alloc] initWithSize:CGSizeMake(screenWidth,screenHeight)];
+    SKView* skView = (SKView *) self.view;
+    
+    [skView presentScene:startScene];
+}
+
+
+//Screen actions ---------------------------------------------------------------
 
 - (BOOL)shouldAutorotate
 {
