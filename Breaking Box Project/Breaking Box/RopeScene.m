@@ -10,28 +10,38 @@
 #import "RopeScene.h"
 #import "ColorBox.h"
 #import "Platform.h"
+#import "LevelCreator.h"
+#import "ElementAttr.h"
 
-static const int kDivLength = 10;
+static const int kDivLength = 2;
+static const int kCutColRadius = 2;
 
 @implementation RopeScene{
     float screenHeight,screenWidth;
     
-    SKSpriteNode *pin,*background;
-    
-    ColorBox *box;
-    Platform *plat;
+    SKSpriteNode *background;
     
     SKShapeNode *ropeLine, *cutLine;
     
     CGPoint initialPos,currPos;
     
-    SKPhysicsJointLimit *ropeJoint;
+    NSMutableArray *ropePointsArr;
+    
+    NSMutableArray *tempRopePoints;
+    
+    int currLevel;
+    
+    LevelCreator *levelCreator;
+    
+    NSMutableArray *currentBoxes, *currentPlatforms, *currentPins, *currentConnections, *currentJoints;
 
 }
 
 -(id)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        
+        currLevel = 0;
         
         background = [SKSpriteNode spriteNodeWithImageNamed:@"cloudy-sky-cartoon.jpg"];
         background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -42,52 +52,91 @@ static const int kDivLength = 10;
         screenWidth = self.size.width;
         screenHeight = self.size.height;
         
-        [self createJoint];
+        [self nextLevel];
         self.physicsWorld.contactDelegate = (id<SKPhysicsContactDelegate>)self;
+        
+        levelCreator = [[LevelCreator alloc] initWithScreenSize:CGPointMake(screenWidth, screenHeight)];
+        
+        NSLog(@"%@",[levelCreator createLevel:currLevel]);
     }
     return self;
 }
--(void) createJoint
-{
-   // NSLog(@"%f, %f",screenWidth,screenHeight);
+-(void)nextLevel{
+    currentBoxes = [NSMutableArray array];
+    currentPins = [NSMutableArray array];
+    currentPlatforms = [NSMutableArray array];
+    currentConnections = [NSMutableArray array];
     
-    pin = [[SKSpriteNode alloc] initWithColor:[UIColor redColor] size:CGSizeMake(10, 10)];
-    pin.position = CGPointMake(screenWidth/2,screenHeight/2 + 200);
+    NSArray *levelAttr = [levelCreator createLevel:currLevel];
     
-    pin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:pin.size];
-    pin.physicsBody.dynamic = NO;
+    NSMutableArray *boxes = levelAttr[BoxObjects];
+    NSMutableArray *platforms = levelAttr[PlatformObjects];
+    NSMutableArray *pins = levelAttr[PinObjects];
+    NSMutableArray *connections = levelAttr[Connections];
     
+    for (ElementAttr *pin in pins)
+    {
+        //create each pin
+        SKSpriteNode *currpin = [[SKSpriteNode alloc] initWithColor:[UIColor redColor] size:CGSizeMake(pin.wH.x, pin.wH.y)];
+        currpin.position = pin.pos;
+        
+        currpin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:currpin.size];
+        currpin.physicsBody.dynamic = NO;
+        
+        [currentPins addObject:currpin];
+    }
+    for (ElementAttr *box in boxes)
+    {
+        UIColor *color = [self getColor:box.color];
+        
+        ColorBox *currbox = [[ColorBox alloc] initWithColor:color size:CGSizeMake(box.wH.x,box.wH.y) type:box.color position:box.pos];
+        
+        [currentBoxes addObject:currbox];
+    }
+    for (ElementAttr *platform in platforms)
+    {
+        UIColor *color = [self getColor:platform.color];
+        
+        Platform *plat = [[Platform alloc] initWithColor:color size:CGSizeMake(platform.wH.x,platform.wH.y) type:platform.color position:platform.pos];
+        
+        [currentPlatforms addObject:plat];
+    }
+    for (NSArray *connect in connections)
+    {
+        SKSpriteNode *pin = [currentPins objectAtIndex:(int)[connect objectAtIndex:0]];
+        ColorBox *box = [currentBoxes objectAtIndex:(int)[connect objectAtIndex:1]];
+        
+        SKShapeNode *tmpRope = [SKShapeNode node];
+        tmpRope.antialiased = NO;
+        CGMutablePathRef pathToDraw = CGPathCreateMutable();
+        CGPathMoveToPoint(pathToDraw, NULL, pin.position.x, pin.position.y);
+        CGPathAddLineToPoint(pathToDraw, NULL, box.position.x, box.position.y);
+        
+        tmpRope.path = pathToDraw;
+        [tmpRope setStrokeColor:[UIColor brownColor]];
+        
+        SKPhysicsJointLimit *tmpJoint = [SKPhysicsJointLimit jointWithBodyA:pin.physicsBody bodyB:box.physicsBody anchorA:pin.position anchorB:box.position];
+        
+        tmpJoint.maxLength = (int)[connect objectAtIndex:2];
+        
+        [currentConnections addObject:tmpRope];
+        [currentJoints addObject:tmpJoint];
+    }
     
+    for (SKShapeNode *rope in currentConnections)
+        [self addChild:rope];
     
-    box = [[ColorBox alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(50, 50) type:Green position:CGPointMake(screenWidth/2,screenHeight/2 - 100)];
+    for (SKSpriteNode *pin in currentPins)
+        [self addChild:pin];
     
-    plat = [[Platform alloc] initWithColor:[UIColor greenColor] size:CGSizeMake(45,10) type:Green position:CGPointMake(screenWidth/2, 50)];
+    for (ColorBox *box in currentBoxes)
+        [self addChild:box];
     
-    ropeLine = [SKShapeNode node];
-    ropeLine.antialiased = NO;
-    CGMutablePathRef pathToDraw = CGPathCreateMutable();
-    CGPathMoveToPoint(pathToDraw, NULL, pin.position.x, pin.position.y);
-    CGPathAddLineToPoint(pathToDraw, NULL, box.position.x, box.position.y);
+    for (Platform *plat in currentPlatforms)
+        [self addChild:plat];
     
-    ropeLine.path = pathToDraw;
-    [ropeLine setStrokeColor:[UIColor brownColor]];
-    
-    
-    [self addChild:ropeLine];
-    
-    [self addChild:pin];
-    
-    [self addChild:box];
-    
-    [self addChild:plat];
-    
-    //build the joint
-    ropeJoint = [SKPhysicsJointLimit jointWithBodyA:pin.physicsBody bodyB:box.physicsBody anchorA:pin.position anchorB:box.position];
-    
-    ropeJoint.maxLength = 125;
-    
-    
-    [self.scene.physicsWorld addJoint:ropeJoint];
+    for (SKPhysicsJointLimit *joint in currentJoints)
+        [self.scene.physicsWorld addJoint:joint];
     
     //make cut path
     cutLine = [SKShapeNode node];
@@ -95,15 +144,39 @@ static const int kDivLength = 10;
     [cutLine setStrokeColor:[UIColor blackColor]];
     [self addChild:cutLine];
     
+    
 }
+-(UIColor*)getColor:(BoxColor)color
+{
+    UIColor *ret;
+    
+    switch(color)
+    {
+        case Green:
+            ret = [UIColor greenColor];
+            break;
+        case Blue:
+            ret = [UIColor blueColor];
+            break;
+        case Purple:
+            ret = [UIColor purpleColor];
+            break;
+    }
+    
+    return ret;
+}
+
+
 -(void)update:(NSTimeInterval)currentTime{
     
-    if (ropeJoint != nil)
+    for (SKShapeNode *rope in currentConnections)
     {
-        CGMutablePathRef pathToDraw = CGPathCreateMutable();
+        /*CGMutablePathRef pathToDraw = CGPathCreateMutable();
         CGPathMoveToPoint(pathToDraw, NULL, pin.position.x, pin.position.y);
         CGPathAddLineToPoint(pathToDraw, NULL, box.position.x, box.position.y);
-        ropeLine.path = pathToDraw;
+        rope.path = pathToDraw;*/
+        
+        //draw rope based on location
     }
     
     //draw dotted
@@ -139,11 +212,12 @@ static const int kDivLength = 10;
     }
 }
 -(BOOL)checkForLevelWin{
-    if (plat.hasBeenActivated)
+    /*if (plat.hasBeenActivated)
     {
         return YES;
     }
-    else return NO;
+    else return NO;*/
+    return NO;
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *initalTouch = [touches allObjects][0];
@@ -163,43 +237,102 @@ static const int kDivLength = 10;
     currPos = CGPointZero;
 }
 -(void) testForCut{
-    CGPoint rp1,rp2;
-    if (initialPos.x <= currPos.x)
+    NSMutableArray *cutPoints = [NSMutableArray array];
+    
+    float deltax = currPos.x - initialPos.x;
+    float deltay = currPos.y - initialPos.y;
+    
+    float angle = atan2(deltay, deltax);
+    
+    float hyplen = sqrtf((deltax*deltax)+(deltay*deltay));
+    
+    
+    
+    int numDiv = hyplen/kDivLength;
+    
+    for (int i = 0; i < numDiv;i++)
     {
-        rp1 = initialPos;
-        rp2 = currPos;
-    }
-    else
-    {
-        rp1 = currPos;
-        rp2 = initialPos;
+        float r = i * kDivLength;
+        
+        float x = cos(angle) * r;
+        float y = sin(angle) * r;
+        
+        x += initialPos.x;
+        y += initialPos.y;
+        
+        CGPoint temp = CGPointMake(x, y);
+        
+        [cutPoints addObject:[NSValue valueWithCGPoint:temp]];
     }
     
-    CGPoint bp1,bp2;
+    //when there are more than one rope, wrap this in a forloop and just run through each ropejoint
     
-    if (pin.position.y > box.position.y){
-        bp1 = pin.position;
-        bp2 = box.position;
-    }
-    else
+    for (SKPhysicsJointLimit *joint in currentJoints)
     {
-        bp1 = box.position;
-        bp2 = pin.position;
-    }
+    NSMutableArray *ropePoints = [self getRopePoints:joint];
     
-    //need to make this logic better
-    if (bp1.x <= bp2.x)
+    NSLog(@"%@",cutPoints);
+    NSLog(@"%@",ropePoints);
+    
+    for (int i = 0; i < [cutPoints count]; i++)
     {
-        if ((rp1.x < bp1.x || rp1.x < bp2.x) && ((rp1.y <= bp1.y && rp1.y >= bp2.y) || (rp2.y <= bp1.y && rp2.y >= bp2.y)))
+        for (int k = 0; k < [ropePoints count]; k++)
         {
-            if (rp2.x > bp2.x)
+            //check for radius col
+            CGPoint p1 = [[cutPoints objectAtIndex:i] CGPointValue];
+            CGPoint p2 = [[ropePoints objectAtIndex:k] CGPointValue];
+            
+            float dx = p1.x - p2.x;
+            float dy = p1.y - p2.y;
+            
+            float hyplen = sqrtf((dx*dx)+(dy*dy));
+            
+            //NSLog(@"%f, %f | %f",dx,dy,hyplen);
+            
+            if (hyplen <= kCutColRadius)
             {
-                [self.scene.physicsWorld removeJoint:ropeJoint];
-                ropeJoint = nil;
-                ropeLine.path = nil;
+                NSLog(@"WE HAVE A CUT AT %f, %f",p2.x,p2.y);
+                return;
             }
         }
     }
+    }
+    //next test all cuttable objects
+    
+}
+-(NSMutableArray*)getRopePoints:(SKPhysicsJointLimit*)rope{
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    
+    CGPoint posOne = rope.bodyA.node.position;
+    CGPoint posTwo = rope.bodyB.node.position;
+    
+    float deltax = posOne.x - posTwo.x;
+    float deltay = posOne.y - posTwo.y;
+    
+    float angle = atan2(deltay, deltax);
+    
+    float hyplen = sqrtf((deltax*deltax)+(deltay*deltay));
+    
+    
+    int numDiv = hyplen/kDivLength;
+    
+    for (int i = 0; i < numDiv;i++)
+    {
+        float r = i * kDivLength;
+        
+        float x = cos(angle) * r;
+        float y = sin(angle) * r;
+        
+        x += posTwo.x;
+        y += posTwo.y;
+        
+        CGPoint temp = CGPointMake(x, y);
+        
+        [tmpArr addObject:[NSValue valueWithCGPoint:temp]];
+    }
+    
+    
+    return tmpArr;
 }
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
