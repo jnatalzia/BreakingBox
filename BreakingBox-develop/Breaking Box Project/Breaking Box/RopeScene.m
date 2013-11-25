@@ -33,7 +33,7 @@ static const int kCutColRadius = 2;
     
     LevelCreator *levelCreator;
     
-    NSMutableArray *currentBoxes, *currentPlatforms, *currentPins, *currentConnections, *currentJoints;
+    NSMutableArray *currentBoxes, *currentPlatforms, *currentPins, *currentConnections, *currentJoints, *currentObstacles;
 }
 
 -(id)initWithSize:(CGSize)size{
@@ -68,6 +68,7 @@ static const int kCutColRadius = 2;
     currentPlatforms = [NSMutableArray array];
     currentConnections = [NSMutableArray array];
     currentJoints = [NSMutableArray array];
+    currentObstacles = [NSMutableArray array];
     
     NSArray *levelAttr = [levelCreator createLevel:currLevel];
     
@@ -75,6 +76,7 @@ static const int kCutColRadius = 2;
     NSMutableArray *platforms = levelAttr[PlatformObjects];
     NSMutableArray *pins = levelAttr[PinObjects];
     NSMutableArray *connections = levelAttr[Connections];
+    NSMutableArray *obstacles = levelAttr[Obstacles];
     
     for (ElementAttr *pin in pins)
     {
@@ -106,6 +108,40 @@ static const int kCutColRadius = 2;
         
          NSLog(@"Running pin");
     }
+    for (ElementAttr *obs in obstacles)
+    {
+        //create each pin
+        //testing obstacle code
+        SKShapeNode *tst = [SKShapeNode node];
+        CGMutablePathRef tstpth = CGPathCreateMutable();
+        
+        tst.fillColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1];
+        tst.lineWidth = 1.0;
+        tst.antialiased = NO;
+        tst.strokeColor = [UIColor blackColor];
+        
+        tst.position = obs.pos;
+        
+        for (int i = 0; i < [obs.points count]; i++)
+        {
+            CGPoint pt = [[obs.points objectAtIndex:i] CGPointValue];
+            
+            if (i == 0)
+                CGPathMoveToPoint(tstpth, NULL, pt.x, pt.y);
+            else
+                CGPathAddLineToPoint(tstpth, NULL, pt.x, pt.y);
+        }
+        CGPoint lastpt = [[obs.points objectAtIndex:0] CGPointValue];
+        
+        CGPathAddLineToPoint(tstpth, NULL, lastpt.x, lastpt.y);
+        
+        tst.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:tstpth];
+        
+        tst.path = tstpth;
+        
+        [currentObstacles addObject:tst];
+        
+    }
     
     for (SKSpriteNode *pin in currentPins)
         [self addChild:pin];
@@ -115,7 +151,11 @@ static const int kCutColRadius = 2;
     
     for (Platform *plat in currentPlatforms)
         [self addChild:plat];
-
+    
+    for (SKShapeNode *obs in currentObstacles)
+        [self addChild:obs];
+    
+    
     
     for (NSArray *connect in connections)
     {
@@ -386,12 +426,13 @@ static const int kCutColRadius = 2;
         currPlat = (Platform*)contact.bodyA.node;
     }
     
-    if (currBox.boxColor == currPlat.platformColor)
+    if ((currBox != nil && currPlat != nil) && currBox.boxColor == currPlat.platformColor)
     {
         if (!currPlat.hasBeenActivated)
         {
             NSLog(@"Circle gets the square");
             currPlat.hasBeenActivated = YES;
+            currPlat.color = [UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1];
         }
     }
     

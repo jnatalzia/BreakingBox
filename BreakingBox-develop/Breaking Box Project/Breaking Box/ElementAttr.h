@@ -21,5 +21,6 @@ typedef enum {
 @property CGPoint wH;
 @property ElementType type;
 @property BoxColor color;
+@property (strong, nonatomic) NSMutableArray *points;
 
 @end

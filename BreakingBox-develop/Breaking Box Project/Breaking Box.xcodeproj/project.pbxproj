@@ -10,6 +10,7 @@
 		3F39FEB41831357700BD4BAB /* RopeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F39FEB31831357700BD4BAB /* RopeScene.m */; };
 		3F42A0F3183A7D850056E768 /* LevelCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F42A0F2183A7D850056E768 /* LevelCreator.m */; };
 		3F42A0F7183A829F0056E768 /* ElementAttr.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F42A0F6183A829F0056E768 /* ElementAttr.m */; };
+		3F4CA4421843AA2B000584A1 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F4CA4411843AA2B000584A1 /* Levels.plist */; };
 		3FE9EA7F1833DB3700CC5854 /* Platform.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA7E1833DB3700CC5854 /* Platform.m */; };
 		3FE9EA821833DC4600CC5854 /* ColorBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA811833DC4600CC5854 /* ColorBox.m */; };
 		4AE1859718318BDF00E643CD /* sky-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AE1859618318BDF00E643CD /* sky-background.png */; };
@@ -56,6 +57,7 @@
 		3F42A0F2183A7D850056E768 /* LevelCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelCreator.m; sourceTree = "<group>"; };
 		3F42A0F5183A829F0056E768 /* ElementAttr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementAttr.h; sourceTree = "<group>"; };
 		3F42A0F6183A829F0056E768 /* ElementAttr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementAttr.m; sourceTree = "<group>"; };
+		3F4CA4411843AA2B000584A1 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		3FE9EA7D1833DB3700CC5854 /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Platform.h; path = "Breaking Box/Platform.h"; sourceTree = "<group>"; };
 		3FE9EA7E1833DB3700CC5854 /* Platform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Platform.m; path = "Breaking Box/Platform.m"; sourceTree = "<group>"; };
 		3FE9EA801833DC4600CC5854 /* ColorBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorBox.h; path = "Breaking Box/ColorBox.h"; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				3F42A0F1183A7D850056E768 /* LevelCreator.h */,
 				3F42A0F2183A7D850056E768 /* LevelCreator.m */,
+				3F4CA4411843AA2B000584A1 /* Levels.plist */,
 				3F42A0F5183A829F0056E768 /* ElementAttr.h */,
 				3F42A0F6183A829F0056E768 /* ElementAttr.m */,
 			);
@@ -320,6 +323,7 @@
 				4AE1859718318BDF00E643CD /* sky-background.png in Resources */,
 				4AF47EEE183021DE009CD43F /* iconmonstr-power-on-3-icon-256.png in Resources */,
 				4AF47EC718301F23009CD43F /* Spaceship.png in Resources */,
+				3F4CA4421843AA2B000584A1 /* Levels.plist in Resources */,
 				4AF47EC918301F23009CD43F /* Images.xcassets in Resources */,
 				4AF47EEF183021DE009CD43F /* purplebox.PNG in Resources */,
 				4AF47EBF18301F23009CD43F /* Main_iPad.storyboard in Resources */,
