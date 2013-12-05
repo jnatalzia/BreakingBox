@@ -34,13 +34,21 @@
 -(NSArray*)createLevel:(int)levelNum{
     
     //get plist info for that level
+    if (levelNum >= [_properties count])
+        return nil;
+    
     NSDictionary *level = (NSDictionary *)[_properties objectAtIndex:levelNum];
+    
     // if cities is in countries then you can access them using [countries valueForKey:@"cityName"];
     NSArray *pins = [level valueForKey:@"Pins"];
     NSArray *connections = [level valueForKey:@"Connections"];
     NSArray *platforms = [level valueForKey:@"Platforms"];
     NSArray *boxes = [level valueForKey:@"Boxes"];
     NSArray *obstacles = [level valueForKey:@"Obstacles"];
+    
+    NSNumber *par = [level valueForKey:@"Par"];
+    
+
     
     
     NSMutableArray *boxObjects = [NSMutableArray array];
@@ -129,7 +137,7 @@
     }
     
     
-    NSArray *nextlevel = [NSArray arrayWithObjects:boxObjects, pinObjects, platObjects, connectionObjects, obstacleObjects, nil];
+    NSArray *nextlevel = [NSArray arrayWithObjects:boxObjects, pinObjects, platObjects, connectionObjects, obstacleObjects, par,nil];
     
     //NSLog(@"%@",nextlevel);
     
