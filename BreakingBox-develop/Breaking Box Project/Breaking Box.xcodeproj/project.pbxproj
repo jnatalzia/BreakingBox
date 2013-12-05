@@ -13,6 +13,8 @@
 		3F4CA4421843AA2B000584A1 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F4CA4411843AA2B000584A1 /* Levels.plist */; };
 		3FE9EA7F1833DB3700CC5854 /* Platform.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA7E1833DB3700CC5854 /* Platform.m */; };
 		3FE9EA821833DC4600CC5854 /* ColorBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA811833DC4600CC5854 /* ColorBox.m */; };
+		4A780E381850F424003CA5F0 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A780E361850F424003CA5F0 /* menu.png */; };
+		4A780E391850F424003CA5F0 /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A780E371850F424003CA5F0 /* restart.png */; };
 		4ABAF4F51843E9BA0074D5B7 /* LevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF4F41843E9BA0074D5B7 /* LevelScene.m */; };
 		4ABAF4F81843E9EE0074D5B7 /* InstructionsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF4F71843E9EE0074D5B7 /* InstructionsScene.m */; };
 		4ABAF503184504D50074D5B7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF502184504D50074D5B7 /* ViewController.m */; };
@@ -71,6 +73,8 @@
 		3FE9EA7E1833DB3700CC5854 /* Platform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Platform.m; path = "Breaking Box/Platform.m"; sourceTree = "<group>"; };
 		3FE9EA801833DC4600CC5854 /* ColorBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorBox.h; path = "Breaking Box/ColorBox.h"; sourceTree = "<group>"; };
 		3FE9EA811833DC4600CC5854 /* ColorBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorBox.m; path = "Breaking Box/ColorBox.m"; sourceTree = "<group>"; };
+		4A780E361850F424003CA5F0 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		4A780E371850F424003CA5F0 /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
 		4ABAF4F31843E9BA0074D5B7 /* LevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LevelScene.h; path = ../LevelScene.h; sourceTree = "<group>"; };
 		4ABAF4F41843E9BA0074D5B7 /* LevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LevelScene.m; path = ../LevelScene.m; sourceTree = "<group>"; };
 		4ABAF4F61843E9EE0074D5B7 /* InstructionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstructionsScene.h; path = ../InstructionsScene.h; sourceTree = "<group>"; };
@@ -256,6 +260,8 @@
 		4AF47EE5183021DE009CD43F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4A780E361850F424003CA5F0 /* menu.png */,
+				4A780E371850F424003CA5F0 /* restart.png */,
 				4ABAF514184514A40074D5B7 /* back_norm.png */,
 				4ABAF515184514A40074D5B7 /* back_press.png */,
 				4ABAF516184514A40074D5B7 /* instruct_norm.png */,
@@ -353,6 +359,7 @@
 				4AF47EED183021DE009CD43F /* greenbox.PNG in Resources */,
 				4AE1859718318BDF00E643CD /* sky-background.png in Resources */,
 				4ABAF51B184514A40074D5B7 /* back_press.png in Resources */,
+				4A780E391850F424003CA5F0 /* restart.png in Resources */,
 				4AF47EEE183021DE009CD43F /* iconmonstr-power-on-3-icon-256.png in Resources */,
 				4AF47EC718301F23009CD43F /* Spaceship.png in Resources */,
 				4ABAF505184513D20074D5B7 /* boxhit.wav in Resources */,
@@ -365,6 +372,7 @@
 				4AF47EBC18301F23009CD43F /* Main_iPhone.storyboard in Resources */,
 				4ABAF51D184514A40074D5B7 /* instruct_press.png in Resources */,
 				4AF47EB318301F23009CD43F /* InfoPlist.strings in Resources */,
+				4A780E381850F424003CA5F0 /* menu.png in Resources */,
 				4ABAF51A184514A40074D5B7 /* back_norm.png in Resources */,
 				4AF47EEB183021DE009CD43F /* bluebox.PNG in Resources */,
 				4ABAF51F184514A40074D5B7 /* play_press.png in Resources */,

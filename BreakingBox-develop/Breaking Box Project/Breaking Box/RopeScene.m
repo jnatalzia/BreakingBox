@@ -376,7 +376,7 @@ static const int kCutColRadius = 2;
     }
     
     //remove boxes that have fallen off the screen
-    for (int i = [currentBoxes count] - 1; i>=0;i--)
+    for (int i = (int)([currentBoxes count] - 1); i>=0;i--)
     {
         ColorBox *b = [currentBoxes objectAtIndex:i];
          //NSLog(@"RUNNING");
