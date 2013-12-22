@@ -21,11 +21,14 @@ typedef enum{
     MaxLength
 }ConnectionIndexes;
 
+
+
 @interface RopeScene : SKScene
-@property(nonatomic, weak)ViewController *viewController;
-/*
--(void)pausegame;
--(void)resumegame;
-*/
+
+@property (nonatomic,weak)ViewController *viewController;
+
+@property int currLevel;
+
+-(void)nextLevel;
 
 @end

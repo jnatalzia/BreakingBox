@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breaking Box/RopeScene.m"
-            timestampString = "407089420.924703"
+            timestampString = "408912954.148598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
-            landmarkName = "-update:"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-nextLevel"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breaking Box/RopeScene.m"
-            timestampString = "407089420.924703"
+            timestampString = "408912954.148598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "-testForCut"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "-nextLevel"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breaking Box/RopeScene.m"
-            timestampString = "407089420.924703"
+            timestampString = "408912954.148598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
-            landmarkName = "-testForCut"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
+            landmarkName = "-nextLevel"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Breaking Box/LevelCreator.m"
-            timestampString = "407088906.936994"
+            timestampString = "408912954.148598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "-createLevel:"
             landmarkType = "5">
          </BreakpointContent>

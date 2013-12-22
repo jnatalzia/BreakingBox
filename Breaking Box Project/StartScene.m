@@ -15,7 +15,7 @@
 }
 
 -(void)didMoveToView:(SKView *)view{
-    NSLog(@"%s",__FUNCTION__);
+   // NSLog(@"%s",__FUNCTION__);
     if(!_contentCreated){
         [self createSceneContents];
         _contentCreated = YES;
@@ -31,7 +31,7 @@
 - (void)willMoveFromView:(SKView *)view{
     [super willMoveFromView:view];
     //
-    NSLog(@"%s",__FUNCTION__);
+    //NSLog(@"%s",__FUNCTION__);
 }
 
 //builds the scene
@@ -47,20 +47,25 @@
 
 
 //builds the title label
-- (SKLabelNode *)createTextNode
+- (SKSpriteNode *)createTextNode
 {
-    SKLabelNode *textNode = [SKLabelNode labelNodeWithFontNamed:@"Ariel"];
+    /*SKLabelNode *textNode = [SKLabelNode labelNodeWithFontNamed:@"Ariel"];
     textNode.text = @"Breaking Box!";
     textNode.fontSize = 25;
     textNode.fontColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
     textNode.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+    textNode.name = @"textNode";*/
+    SKSpriteNode *textNode = [[SKSpriteNode alloc]initWithImageNamed:@"title.png"];
+    textNode.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) +  60);
     textNode.name = @"textNode";
+    textNode.size = CGSizeMake(320, 75);
+    
     return textNode;
 }
 
 //adds the effects to the transitions
 -(void)runStartScreenTransition{
-    NSLog(@"%s",__FUNCTION__);
+    //NSLoNSLog(@"%s",__FUNCTION__);
     SKNode *textNode = [self childNodeWithName:@"textNode"];
     SKAction *pause = [SKAction waitForDuration: 0.25];
     SKAction *zoom = [SKAction scaleTo: 5.0 duration: .75];
@@ -75,19 +80,19 @@
         
         if (self.viewController.gameState == kGameStateGame)
         {
-            [self.view presentScene:self.viewController.ropeScene];
+            [self.view presentScene:self.viewController.levelScene];
         }
         if (self.viewController.gameState == kGameStateInstructions)
         {
             [self.view presentScene:self.viewController.instructionsScene];
         }
-        NSLog(@"All done");
+        //NSLog(@"All done");
     }];
 }
 
 //deallocates memory
 - (void)dealloc{
-    NSLog(@"%s",__FUNCTION__);
+    //NSLog(@"%s",__FUNCTION__);
 }
 
 

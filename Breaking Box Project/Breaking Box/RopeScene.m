@@ -12,6 +12,7 @@
 #import "Platform.h"
 #import "LevelCreator.h"
 #import "ElementAttr.h"
+@import AVFoundation;
 
 static const int kDivLength = 2;
 static const int kCutColRadius = 2;
@@ -29,26 +30,38 @@ static const int kCutColRadius = 2;
     
     NSMutableArray *tempRopePoints;
     
-    SKAction *platsound;
-    
-    int currLevel;
+    int numCuts,levelpar;
     
     LevelCreator *levelCreator;
     
     NSMutableArray *currentBoxes, *currentPlatforms, *currentPins, *currentConnections, *currentJoints, *currentObstacles;
+    
+    BOOL levelChanging;
+    
+    SKLabelNode *levelLabel;
+    
+    NSUserDefaults *defaults;
+    
+    SKAction *ropecutsound;
+    SKAction *boxhitsound;
+    
+    AVAudioPlayer *backgroundAudioPlayer;
+    int lastZPos;
+    
 }
 
+/* Method Purpose: Initializes the main game scene screen*/
 -(id)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        platsound = [SKAction playSoundFileNamed:@"boxhit.wav" waitForCompletion:NO];
-        
-        currLevel = 0;
+        //_currLevel = 0;
+        levelChanging = NO;
+        lastZPos = -1;
         
         background = [SKSpriteNode spriteNodeWithImageNamed:@"cloudy-sky-cartoon.jpg"];
         background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        background.zPosition = -2;
+        sendToBackground(background,lastZPos);
         [self addChild:background];
         
         self.backgroundColor = [UIColor whiteColor];
@@ -56,17 +69,134 @@ static const int kCutColRadius = 2;
         screenWidth = self.size.width;
         screenHeight = self.size.height;
         
+        ropecutsound = [SKAction playSoundFileNamed:@"ropecut.wav" waitForCompletion:NO];
+        boxhitsound = [SKAction playSoundFileNamed: @"boxhit.wav" waitForCompletion:NO];
+        
         self.physicsWorld.contactDelegate = (id<SKPhysicsContactDelegate>)self;
         
         levelCreator = [[LevelCreator alloc] initWithScreenSize:CGPointMake(screenWidth, screenHeight)];
         
-        //NSLog(@"%@",[levelCreator createLevel:currLevel]);
+        //NSLog(@"%@",[levelCreator createLevel:_currLevel]);
+        
+        currentBoxes = [NSMutableArray array];
+        currentPins = [NSMutableArray array];
+        currentPlatforms = [NSMutableArray array];
+        currentConnections = [NSMutableArray array];
+        currentJoints = [NSMutableArray array];
+        currentObstacles = [NSMutableArray array];
+        
+          //make level label
+        levelLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        
+        NSString *lev = [NSString stringWithFormat:@"Level %d",_currLevel+1];
+        levelLabel.fontColor = [UIColor blackColor];
+        
+        
+        levelLabel.text = lev;
+        levelLabel.fontSize = 14;
+        levelLabel.position = CGPointMake(30,screenHeight - 20);
+        
+        
+        [self addChild:levelLabel];
+        
+        //create restart button
+        SKSpriteNode *rButton = [[SKSpriteNode alloc] initWithImageNamed:@"restart.png"];
+        rButton.position = CGPointMake(screenWidth - 15,screenHeight-15);
+        rButton.size = CGSizeMake(20, 20);
+        rButton.name = @"restart";
+        
+        [self addChild:rButton];
+        
+        //create menu button
+        SKSpriteNode *mButton = [[SKSpriteNode alloc] initWithImageNamed:@"menu.png"];
+        mButton.position = CGPointMake(screenWidth - 40,screenHeight-15);
+        mButton.size = CGSizeMake(20, 20);
+        mButton.name = @"menu";
+        
+        [self addChild:mButton];
+        
+        //start level
         
         [self nextLevel];
+        
+        //make par label
+        SKLabelNode *parLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        NSString *ps = [NSString stringWithFormat:@"Cuts: %d | Par: %d",numCuts,levelpar];
+        parLabel.fontColor = [UIColor blackColor];
+        parLabel.fontSize = 10;
+        parLabel.text = ps;
+        parLabel.position = CGPointMake(40,screenHeight - 35);
+        parLabel.name = @"parlabel";
+      
+        [self addChild:parLabel];
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        
+        [self startbackgroundmusic];
     }
     return self;
 }
+/* Method Purpose: Sends the given node to the farthest back z-index putting it in the back */
+void sendToBackground(SKSpriteNode* n, int last)
+{
+    last--;
+    n.zPosition = last;
+}
+/* Method Purpose: Starts the background music*/
+-(void)startbackgroundmusic
+{
+    NSError *err;
+    NSURL *file = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Building Blocks 30.mp3" ofType:nil]];
+    backgroundAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:file error:&err];
+    if (err) {
+        //NSLog(@"error in audio play %@",[err userInfo]);
+        return;
+    }
+    [backgroundAudioPlayer prepareToPlay];
+    
+    // this will play the music infinitely
+    backgroundAudioPlayer.numberOfLoops = -1;
+    [backgroundAudioPlayer setVolume:1.0];
+    [backgroundAudioPlayer play];
+}
+/* Method Purpose: From the LevelCreator helper file, this method creates the next level and displays it all on the screen*/
 -(void)nextLevel{
+    
+    //NSLog(@"currLevel:%d",_currLevel);
+    NSString *lev = [NSString stringWithFormat:@"Level %d",_currLevel+1];
+    levelLabel.text = lev;
+    //reset numcuts
+    numCuts = 0;
+    NSString *ps = [NSString stringWithFormat:@"Cuts: %d | Par: %d",numCuts,levelpar];
+    SKLabelNode *p = (SKLabelNode*)[self childNodeWithName:@"parlabel"];
+    p.text = ps;
+    //clear out the arrays
+    
+    
+    for (ColorBox *b in currentBoxes)
+    {
+        [b removeFromParent];
+    }
+    for (SKSpriteNode *p in currentPins)
+    {
+        [p removeFromParent];
+    }
+    for (Platform *p in currentPlatforms)
+    {
+        [p removeFromParent];
+    }
+    for (SKShapeNode *s in currentConnections)
+    {
+        [s removeFromParent];
+    }
+    for (SKShapeNode *s in currentObstacles)
+    {
+        [s removeFromParent];
+    }
+
+    [self.physicsWorld removeAllJoints];
+    
+    //make them anew
     currentBoxes = [NSMutableArray array];
     currentPins = [NSMutableArray array];
     currentPlatforms = [NSMutableArray array];
@@ -74,21 +204,41 @@ static const int kCutColRadius = 2;
     currentJoints = [NSMutableArray array];
     currentObstacles = [NSMutableArray array];
     
-    NSArray *levelAttr = [levelCreator createLevel:currLevel];
+    NSArray *levelAttr = [levelCreator createLevel:_currLevel];
+    
+    //test for game over!
+    if (levelAttr == nil)
+    {
+        [self.view presentScene:self.viewController.levelScene];
+        //do game over stuff
+        
+        return;
+    }
     
     NSMutableArray *boxes = levelAttr[BoxObjects];
     NSMutableArray *platforms = levelAttr[PlatformObjects];
     NSMutableArray *pins = levelAttr[PinObjects];
     NSMutableArray *connections = levelAttr[Connections];
     NSMutableArray *obstacles = levelAttr[Obstacles];
+    NSNumber *par = levelAttr[Par];
+    
+    levelpar = [par intValue];
     
     for (ElementAttr *pin in pins)
     {
         //create each pin
-        SKSpriteNode *currpin = [[SKSpriteNode alloc] initWithColor:[UIColor redColor] size:CGSizeMake(pin.wH.x, pin.wH.y)];
+        SKShapeNode *currpin = [SKShapeNode node];
         currpin.position = pin.pos;
         
-        currpin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:currpin.size];
+        CGPathRef cir = CGPathCreateWithEllipseInRect(CGRectMake(-pin.wH.x/2, -pin.wH.y/2, pin.wH.x, pin.wH.y), NULL);
+        
+        currpin.path = cir;
+        currpin.strokeColor = [UIColor blackColor];
+        currpin.antialiased = NO;
+        currpin.fillColor = [UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1];
+        
+        //currpin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:currpin.size];
+        currpin.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:pin.wH.x];
         currpin.physicsBody.dynamic = NO;
         
         [currentPins addObject:currpin];
@@ -96,7 +246,7 @@ static const int kCutColRadius = 2;
     }
     for (ElementAttr *box in boxes)
     {
-        UIColor *color = [self getColor:box.color];
+        UIColor *color = getColor(box.color);
         
         ColorBox *currbox = [[ColorBox alloc] initWithColor:color size:CGSizeMake(box.wH.x,box.wH.y) type:box.color position:box.pos];
         
@@ -104,13 +254,13 @@ static const int kCutColRadius = 2;
     }
     for (ElementAttr *platform in platforms)
     {
-        UIColor *color = [self getColor:platform.color];
+        UIColor *color = getColor(platform.color);
         
         Platform *plat = [[Platform alloc] initWithColor:color size:CGSizeMake(platform.wH.x,platform.wH.y) type:platform.color position:platform.pos];
         
         [currentPlatforms addObject:plat];
         
-         NSLog(@"Running pin");
+         //NSLog(@"Running pin");
     }
     for (ElementAttr *obs in obstacles)
     {
@@ -193,7 +343,7 @@ static const int kCutColRadius = 2;
     {
         [self.scene.physicsWorld addJoint:joint];
         
-        NSLog(@"Called");
+        //NSLog(@"Called");
     }
     
     //make cut path
@@ -204,7 +354,9 @@ static const int kCutColRadius = 2;
     
     
 }
--(UIColor*)getColor:(BoxColor)color
+/* Method Purpose: Gets the color for each box color */
+
+UIColor* getColor(BoxColor color)
 {
     UIColor *ret;
     
@@ -222,9 +374,10 @@ static const int kCutColRadius = 2;
     }
     
     return ret;
+    
 }
 
-
+/* Method Purpose: Update is called at each time interval to test for cuts and collision and such */
 -(void)update:(NSTimeInterval)currentTime{
     
     for (int i =0; i < [currentConnections count]; i++)
@@ -269,38 +422,85 @@ static const int kCutColRadius = 2;
         cutLine.path = NULL;
     }
     
-    if ([self checkForLevelWin]){
-        
-        //NSLog(@"%@",parent);
-        
-        //[parent gameWon];
-    }
-}
--(BOOL)checkForLevelWin{
-    /*if (plat.hasBeenActivated)
+    //remove boxes that have fallen off the screen
+    for (int i = (int)([currentBoxes count] - 1); i>=0;i--)
     {
-        return YES;
+        ColorBox *b = [currentBoxes objectAtIndex:i];
+         //NSLog(@"RUNNING");
+        if (b.position.y < -b.size.height)
+        {
+            [currentBoxes removeObject:b];
+            
+            [b removeFromParent];
+            
+            
+            //NSLog(@"CALLED HERE");
+            //if there are no boxes left and level is not over
+            if (!levelChanging && [currentBoxes count] == 0)
+                [self levelChangeAnimation:NO];
+
+        }
     }
-    else return NO;*/
-    return NO;
 }
+/* Method Purpose:  checks to see if every platform has been activated*/
+-(BOOL)checkForLevelWin{
+    BOOL win = YES;
+    
+    for (int i = 0; i < [currentPlatforms count];i++)
+    {
+        Platform *p = [currentPlatforms objectAtIndex:i];
+        
+        if (!p.hasBeenActivated)
+            win = NO;
+    }
+    
+    return win;
+}
+/* Method Purpose:  Tests for button clicking as well as sets touch variables for cutting */
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *initalTouch = [touches allObjects][0];
     
     initialPos = [initalTouch locationInNode:self];
     currPos = [initalTouch locationInNode:self];
+    
+    //test for restart click
+    SKSpriteNode *r = (SKSpriteNode*)[self childNodeWithName:@"restart"];
+    SKSpriteNode *m = (SKSpriteNode*)[self childNodeWithName:@"menu"];
+    
+    CGRect rRect = CGRectMake(r.position.x - r.size.width/2, r.position.y - r.size.height/2, r.size.width, r.size.height);
+    CGRect tRect = CGRectMake(initialPos.x, initialPos.y, 1, 1);
+    CGRect mRect = CGRectMake(m.position.x - m.size.width/2, m.position.y - m.size.height/2, m.size.width, m.size.height);
+    
+    if (CGRectIntersectsRect(rRect, tRect))
+    {
+        [self levelChangeAnimation:NO];
+    }
+    else if (CGRectIntersectsRect(mRect, tRect))
+    {
+        //goto menu select
+        //NSLog(@"MENU SELECT");
+        [self.view presentScene:self.viewController.levelScene];
+    }
 }
+/* Method Purpose:  Moves the touch vars */
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *currTouch = [touches allObjects][0];
     
     currPos = [currTouch locationInNode:self];
 }
+/* Method Purpose:  Resets the touch variables and tests for a cut on any and all ropes */
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     //[box.physicsBody applyForce:CGVectorMake(500, 1000)];
     [self testForCut];
     initialPos = CGPointZero;
     currPos = CGPointZero;
+    
+    numCuts++;
+    NSString *ps = [NSString stringWithFormat:@"Cuts: %d | Par: %d",numCuts,levelpar];
+    SKLabelNode *p = (SKLabelNode*)[self childNodeWithName:@"parlabel"];
+    p.text = ps;
 }
+/* Method Purpose:  Pixel perfect cut detection on the ropes */
 -(void) testForCut{
     NSMutableArray *cutPoints = [NSMutableArray array];
     
@@ -332,7 +532,7 @@ static const int kCutColRadius = 2;
     
     //when there are more than one rope, wrap this in a forloop and just run through each ropejoint
     
-    for (int ind = (int)[currentJoints count] -1; ind >= 0; ind--)
+    for (int ind = (int)([currentJoints count] - 1); ind >= 0; ind--)
     {
         SKPhysicsJointLimit *joint = (SKPhysicsJointLimit*)[currentJoints objectAtIndex:ind];
         NSMutableArray *ropePoints = [self getRopePoints:joint];
@@ -342,9 +542,12 @@ static const int kCutColRadius = 2;
     
     for (int i = 0; i < [cutPoints count]; i++)
     {
+        BOOL ropecut = NO;
         for (int k = 0; k < [ropePoints count]; k++)
         {
             //check for radius col
+           
+            
             CGPoint p1 = [[cutPoints objectAtIndex:i] CGPointValue];
             CGPoint p2 = [[ropePoints objectAtIndex:k] CGPointValue];
             
@@ -357,7 +560,7 @@ static const int kCutColRadius = 2;
             
             if (hyplen <= kCutColRadius)
             {
-                NSLog(@"WE HAVE A CUT AT %f, %f ON ROPE %@",p2.x,p2.y, joint);
+                //NSLog(@"WE HAVE A CUT AT %f, %f ON ROPE %@",p2.x,p2.y, joint);
                 
                 [self.physicsWorld removeJoint:joint];
                
@@ -365,21 +568,29 @@ static const int kCutColRadius = 2;
                 
                 SKShapeNode *rope = (SKShapeNode*)[currentConnections objectAtIndex:ind];
                 
-                rope.path = nil;
+                
+                SKAction *ropeDis = [SKAction fadeAlphaTo:0 duration:.25];
                 
                 [currentConnections removeObjectAtIndex:ind];
                 
-                //joint = nil;
+                [rope runAction:ropeDis completion:^{
+                    rope.path = nil;
+                    [rope removeFromParent];
+                }];
                 
-                
-                return;
+                ropecut = YES;
+                [self runAction:ropecutsound];
             }
+            if (ropecut)
+                break;
         }
+        if (ropecut)
+            break;
     }
     }
-    //next test all cuttable objects
     
 }
+/* Method Purpose:  Used to get all the rope points for the testForCut method */
 -(NSMutableArray*)getRopePoints:(SKPhysicsJointLimit*)rope{
     NSMutableArray *tmpArr = [NSMutableArray array];
     
@@ -414,6 +625,34 @@ static const int kCutColRadius = 2;
     
     return tmpArr;
 }
+/* Method Purpose:  Used to fade in and out to change the level */
+-(void)levelChangeAnimation:(BOOL)isNextLevel
+{
+    levelChanging = YES;
+    SKAction *wait = [SKAction waitForDuration:.5];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.5];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.5];
+    SKAction *next = [SKAction runBlock:^{
+        if(isNextLevel)
+            _currLevel++;
+        [self nextLevel];
+    }];
+    
+    NSArray *seqArr;
+    
+    if (isNextLevel)
+        seqArr = [NSArray arrayWithObjects:wait,wait,wait,fadeOut,next,wait,fadeIn, nil];
+    else
+        seqArr = [NSArray arrayWithObjects:fadeOut,next,wait,fadeIn, nil];
+    
+    SKAction *seq = [SKAction sequence:seqArr];
+    
+    [self runAction:seq completion:^{
+        levelChanging = NO;
+    }];
+    
+}
+/* Method Purpose: Method which handles box collisions */
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
     ColorBox *currBox;
@@ -434,12 +673,45 @@ static const int kCutColRadius = 2;
     {
         if (!currPlat.hasBeenActivated)
         {
-            NSLog(@"Circle gets the square");
+            
+            [self runAction:boxhitsound];
             currPlat.hasBeenActivated = YES;
             currPlat.color = [UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1];
+            
+            
+            //test for level win
+            if ([self checkForLevelWin]){
+                
+                //set user defaults
+                NSInteger parMade = [defaults integerForKey:[NSString stringWithFormat:@"%d",_currLevel]];
+                
+                if((int)parMade == CompleteUnderPar)
+                {
+                    //do nothing
+                }
+                else if ((int)parMade == CompleteOverPar)
+                {
+                    if (numCuts <= levelpar)
+                    {
+                        [defaults setInteger:CompleteUnderPar forKey:[NSString stringWithFormat:@"%d",_currLevel]];
+                    }
+                }
+                else
+                {
+                    //NSLog(@"%d | %d", numCuts,levelpar);
+                    if (numCuts > levelpar)
+                    {
+                        [defaults setInteger:CompleteOverPar forKey:[NSString stringWithFormat:@"%d",_currLevel]];
+                    }
+                    else if (numCuts <= levelpar)
+                    {
+                        [defaults setInteger:CompleteUnderPar forKey:[NSString stringWithFormat:@"%d",_currLevel]];
+                    }
+                }
+                
+                [self levelChangeAnimation:YES];
+            }
         }
-        //SKAction *platsound = [SKAction playSoundFileNamed:@"boxhit.wav" waitForCompletion:NO];
-        [self runAction:platsound];
     }
     
 }

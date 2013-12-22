@@ -20,6 +20,12 @@ typedef enum{
     kGameStateGame // this is ropeScene
 }GameState;
 
+typedef enum{
+    NotComplete=0,
+    CompleteOverPar=1,
+    CompleteUnderPar=2
+}parCompletion;
+
 @interface ViewController : UIViewController
 //list of screens
 @property(nonatomic, strong) StartScene *startScene;
@@ -30,6 +36,7 @@ typedef enum{
 
 -(IBAction)clickedStartSceneButton;
 -(void)gameWon;
+-(void)goToLevel:(int)level;
 /*
 -(void)pausegame;
 -(void)resumegame;

@@ -72,7 +72,14 @@
     }
     return _startScene;
 }
-
+-(LevelScene *)levelScene{
+    if (!_levelScene){
+        _levelScene = [LevelScene sceneWithSize:self.skView.bounds.size];
+        _levelScene.scaleMode = SKSceneScaleModeAspectFill;
+        _levelScene.viewController = self;
+    }
+    return _levelScene;
+}
 - (InstructionsScene *)instructionsScene{
     if (!_instructionsScene) {
         NSLog(@"%s",__FUNCTION__);
@@ -112,7 +119,16 @@
     NSLog(@"%s",__FUNCTION__);
     [self.skView presentScene: self.instructionsScene];
 }
-
+-(void)goToLevel:(int)level
+{
+    self.ropeScene.currLevel = level;
+    
+    //NSLog(@"gotolevel:%d",self.ropeScene.currLevel);
+    
+    [self.ropeScene nextLevel];
+    
+    [self.skView presentScene: self.ropeScene];
+}
 
 #pragma mark - Actions
 - (IBAction)clickedStartSceneButton{

@@ -8,11 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		3F39FEB41831357700BD4BAB /* RopeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F39FEB31831357700BD4BAB /* RopeScene.m */; };
+		3F3C7D8C1856216E00A07690 /* levelbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3C7D8B1856216E00A07690 /* levelbutton.png */; };
+		3F3C7D8F1856269000A07690 /* star_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3C7D8D1856269000A07690 /* star_grey.png */; };
+		3F3C7D901856269000A07690 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3C7D8E1856269000A07690 /* star_yellow.png */; };
 		3F42A0F3183A7D850056E768 /* LevelCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F42A0F2183A7D850056E768 /* LevelCreator.m */; };
 		3F42A0F7183A829F0056E768 /* ElementAttr.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F42A0F6183A829F0056E768 /* ElementAttr.m */; };
 		3F4CA4421843AA2B000584A1 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F4CA4411843AA2B000584A1 /* Levels.plist */; };
+		3FC6F6CB185F7EFA001B6BD8 /* 320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC6F6C7185F7EFA001B6BD8 /* 320x480.png */; };
+		3FC6F6CC185F7EFA001B6BD8 /* 640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC6F6C8185F7EFA001B6BD8 /* 640x960.png */; };
+		3FC6F6CD185F7EFA001B6BD8 /* 640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC6F6C9185F7EFA001B6BD8 /* 640x1136.png */; };
+		3FC6F6CE185F7EFA001B6BD8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC6F6CA185F7EFA001B6BD8 /* Icon.png */; };
+		3FC6F6D0185F7FAE001B6BD8 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC6F6CF185F7FAE001B6BD8 /* title.png */; };
 		3FE9EA7F1833DB3700CC5854 /* Platform.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA7E1833DB3700CC5854 /* Platform.m */; };
 		3FE9EA821833DC4600CC5854 /* ColorBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9EA811833DC4600CC5854 /* ColorBox.m */; };
+		4A780E381850F424003CA5F0 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A780E361850F424003CA5F0 /* menu.png */; };
+		4A780E391850F424003CA5F0 /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A780E371850F424003CA5F0 /* restart.png */; };
+		4AA4335A185E637D00021F8B /* ropecut.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4AA43359185E637D00021F8B /* ropecut.wav */; };
+		4AA4335C185E709600021F8B /* Building Blocks 30.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4AA4335B185E709600021F8B /* Building Blocks 30.mp3 */; };
 		4ABAF4F51843E9BA0074D5B7 /* LevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF4F41843E9BA0074D5B7 /* LevelScene.m */; };
 		4ABAF4F81843E9EE0074D5B7 /* InstructionsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF4F71843E9EE0074D5B7 /* InstructionsScene.m */; };
 		4ABAF503184504D50074D5B7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAF502184504D50074D5B7 /* ViewController.m */; };
@@ -62,15 +74,27 @@
 /* Begin PBXFileReference section */
 		3F39FEB21831357700BD4BAB /* RopeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RopeScene.h; sourceTree = "<group>"; };
 		3F39FEB31831357700BD4BAB /* RopeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RopeScene.m; sourceTree = "<group>"; };
+		3F3C7D8B1856216E00A07690 /* levelbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = levelbutton.png; path = "../Breaking Box/levelbutton.png"; sourceTree = "<group>"; };
+		3F3C7D8D1856269000A07690 /* star_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star_grey.png; path = "../Breaking Box/star_grey.png"; sourceTree = "<group>"; };
+		3F3C7D8E1856269000A07690 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star_yellow.png; path = "../Breaking Box/star_yellow.png"; sourceTree = "<group>"; };
 		3F42A0F1183A7D850056E768 /* LevelCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelCreator.h; sourceTree = "<group>"; };
 		3F42A0F2183A7D850056E768 /* LevelCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelCreator.m; sourceTree = "<group>"; };
 		3F42A0F5183A829F0056E768 /* ElementAttr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementAttr.h; sourceTree = "<group>"; };
 		3F42A0F6183A829F0056E768 /* ElementAttr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementAttr.m; sourceTree = "<group>"; };
 		3F4CA4411843AA2B000584A1 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
+		3FC6F6C7185F7EFA001B6BD8 /* 320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 320x480.png; sourceTree = "<group>"; };
+		3FC6F6C8185F7EFA001B6BD8 /* 640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 640x960.png; sourceTree = "<group>"; };
+		3FC6F6C9185F7EFA001B6BD8 /* 640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 640x1136.png; sourceTree = "<group>"; };
+		3FC6F6CA185F7EFA001B6BD8 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		3FC6F6CF185F7FAE001B6BD8 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = title.png; path = ../title.png; sourceTree = "<group>"; };
 		3FE9EA7D1833DB3700CC5854 /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Platform.h; path = "Breaking Box/Platform.h"; sourceTree = "<group>"; };
 		3FE9EA7E1833DB3700CC5854 /* Platform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Platform.m; path = "Breaking Box/Platform.m"; sourceTree = "<group>"; };
 		3FE9EA801833DC4600CC5854 /* ColorBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorBox.h; path = "Breaking Box/ColorBox.h"; sourceTree = "<group>"; };
 		3FE9EA811833DC4600CC5854 /* ColorBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorBox.m; path = "Breaking Box/ColorBox.m"; sourceTree = "<group>"; };
+		4A780E361850F424003CA5F0 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		4A780E371850F424003CA5F0 /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
+		4AA43359185E637D00021F8B /* ropecut.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ropecut.wav; sourceTree = "<group>"; };
+		4AA4335B185E709600021F8B /* Building Blocks 30.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Building Blocks 30.mp3"; sourceTree = "<group>"; };
 		4ABAF4F31843E9BA0074D5B7 /* LevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LevelScene.h; path = ../LevelScene.h; sourceTree = "<group>"; };
 		4ABAF4F41843E9BA0074D5B7 /* LevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LevelScene.m; path = ../LevelScene.m; sourceTree = "<group>"; };
 		4ABAF4F61843E9EE0074D5B7 /* InstructionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstructionsScene.h; path = ../InstructionsScene.h; sourceTree = "<group>"; };
@@ -256,6 +280,18 @@
 		4AF47EE5183021DE009CD43F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				3FC6F6CF185F7FAE001B6BD8 /* title.png */,
+				3FC6F6C7185F7EFA001B6BD8 /* 320x480.png */,
+				3FC6F6C8185F7EFA001B6BD8 /* 640x960.png */,
+				3FC6F6C9185F7EFA001B6BD8 /* 640x1136.png */,
+				3FC6F6CA185F7EFA001B6BD8 /* Icon.png */,
+				4AA4335B185E709600021F8B /* Building Blocks 30.mp3 */,
+				4AA43359185E637D00021F8B /* ropecut.wav */,
+				3F3C7D8D1856269000A07690 /* star_grey.png */,
+				3F3C7D8E1856269000A07690 /* star_yellow.png */,
+				3F3C7D8B1856216E00A07690 /* levelbutton.png */,
+				4A780E361850F424003CA5F0 /* menu.png */,
+				4A780E371850F424003CA5F0 /* restart.png */,
 				4ABAF514184514A40074D5B7 /* back_norm.png */,
 				4ABAF515184514A40074D5B7 /* back_press.png */,
 				4ABAF516184514A40074D5B7 /* instruct_norm.png */,
@@ -349,22 +385,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F3C7D8C1856216E00A07690 /* levelbutton.png in Resources */,
+				3FC6F6CD185F7EFA001B6BD8 /* 640x1136.png in Resources */,
+				4AA4335C185E709600021F8B /* Building Blocks 30.mp3 in Resources */,
 				4AF47EEC183021DE009CD43F /* cloudy-sky-cartoon.jpg in Resources */,
 				4AF47EED183021DE009CD43F /* greenbox.PNG in Resources */,
+				3FC6F6CB185F7EFA001B6BD8 /* 320x480.png in Resources */,
 				4AE1859718318BDF00E643CD /* sky-background.png in Resources */,
+				4AA4335A185E637D00021F8B /* ropecut.wav in Resources */,
 				4ABAF51B184514A40074D5B7 /* back_press.png in Resources */,
+				4A780E391850F424003CA5F0 /* restart.png in Resources */,
 				4AF47EEE183021DE009CD43F /* iconmonstr-power-on-3-icon-256.png in Resources */,
 				4AF47EC718301F23009CD43F /* Spaceship.png in Resources */,
+				3FC6F6CE185F7EFA001B6BD8 /* Icon.png in Resources */,
+				3FC6F6CC185F7EFA001B6BD8 /* 640x960.png in Resources */,
 				4ABAF505184513D20074D5B7 /* boxhit.wav in Resources */,
 				3F4CA4421843AA2B000584A1 /* Levels.plist in Resources */,
 				4AF47EC918301F23009CD43F /* Images.xcassets in Resources */,
 				4AF47EEF183021DE009CD43F /* purplebox.PNG in Resources */,
+				3FC6F6D0185F7FAE001B6BD8 /* title.png in Resources */,
 				4AF47EBF18301F23009CD43F /* Main_iPad.storyboard in Resources */,
 				4ABAF51E184514A40074D5B7 /* play_norm.png in Resources */,
 				4ABAF51C184514A40074D5B7 /* instruct_norm.png in Resources */,
+				3F3C7D901856269000A07690 /* star_yellow.png in Resources */,
 				4AF47EBC18301F23009CD43F /* Main_iPhone.storyboard in Resources */,
 				4ABAF51D184514A40074D5B7 /* instruct_press.png in Resources */,
+				3F3C7D8F1856269000A07690 /* star_grey.png in Resources */,
 				4AF47EB318301F23009CD43F /* InfoPlist.strings in Resources */,
+				4A780E381850F424003CA5F0 /* menu.png in Resources */,
 				4ABAF51A184514A40074D5B7 /* back_norm.png in Resources */,
 				4AF47EEB183021DE009CD43F /* bluebox.PNG in Resources */,
 				4ABAF51F184514A40074D5B7 /* play_press.png in Resources */,

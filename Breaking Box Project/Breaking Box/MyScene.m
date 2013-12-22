@@ -10,6 +10,8 @@
 
 @implementation MyScene
 
+/*THIS CLASS IS NOT USED*/
+
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */

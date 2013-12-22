@@ -13,7 +13,8 @@ typedef enum{
     PinObjects = 1,
     PlatformObjects = 2,
     Connections = 3,
-    Obstacles = 4
+    Obstacles = 4,
+    Par = 5
 }LevelCreatorIndex;
 
 @interface LevelCreator : NSObject
